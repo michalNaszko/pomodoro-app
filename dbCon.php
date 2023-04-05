@@ -1,37 +1,39 @@
 <?php
 class Connection
 {
-    private static $con = null;
+    private static $instance = null;
+    private $conn = null;
 
     private function __construct()
-    {
-        $servername = ini_get("mysql.default.servername");
-        $username = ini_get("mysql.default.user");
-        $password = ini_get("mysql.default.password");
-        $db = ini_get("mysql.default.db");
+    {        
+        $servername = getenv("mysql.default.servername");
+        $username = getenv("mysql.default.user");
+        $password = getenv("mysql.default.password");
+        $db = getenv("mysql.default.db");
 
         try {
-            self::$con = new PDO("mysql:host=$servername;dbname=$db", 
+            $this->conn = new PDO("mysql:host=$servername;dbname=$db", 
                              $username, $password);
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             
         }
-        catch(PDOException $s) {
+        catch(PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
         }
     }
 
     function __destructor() {
-        self::$con = null;
+        $this->conn = null;
     }
 
     public static function getConnection()
     {
-        if (self::$con == null)
+        if (self::$instance == null)
         {
-            self::$con = new Connection();
+            self::$instance = new Connection();
         }
 
-        return self::$con;
+        return self::$instance->conn;
     }
 }
 ?>
