@@ -19,13 +19,12 @@
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         $conn = Connection::getConnection();
-
-        $username = $conn->quote($_POST['username']);
-        $password = $conn->quote($_POST['password']);
         
-        $sql = 'INSERT INTO Users (id, login, password) VALUES (NULL, $username, $password)';
-        $conn->query($sql);
-    }
-    
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        
+        $sql = "INSERT INTO Users (id, login, password) VALUES (NULL, :username, :password)";
+        $conn->prepare($sql)->execute(['username' => $username, 'password' => $password]);
+    }  
 }
 ?>
