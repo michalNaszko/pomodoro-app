@@ -40,8 +40,8 @@ class Connection
     {
         $conn = self::getConnection();
 
-        $sql = "SELECT login FROM Users";
-        $stmt = $conn->prepare($sql);
+        $query = "SELECT login FROM Users";
+        $stmt = $conn->prepare($query);
         $stmt->execute();
 
         foreach ($stmt->fetchAll() as $user)
@@ -64,8 +64,36 @@ class Connection
 
             $hashPass = password_hash($password, PASSWORD_DEFAULT);
             
-            $sql = "INSERT INTO Users (id, login, password) VALUES (NULL, :username, :password)";
-            $conn->prepare($sql)->execute(['username' => $username, 'password' => $hashPass]);
+            $query = "INSERT INTO Users (id, login, password) VALUES (NULL, :username, :password)";
+            $conn->prepare($query)->execute(['username' => $username, 'password' => $hashPass]);
+        }
+    }
+
+    public static function login($username, $password)
+    {
+        $login = FALSE;
+        $conn = self::getConnection();
+
+        $query = 'SELECT * FROM Users WHERE (login = :username)';
+        $stmt = $conn->prepare($query);
+        $stmt->execute(['username' => $username]);
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (is_array($row))
+        {
+            if (password_verify($password, $row['password']))
+            {
+                $login = TRUE;
+                echo "You are logged!\n"."<br/>";
+            }
+            else
+            {
+                echo "Wrong password!\n"."<br/>";
+            }
+        }
+        else
+        {
+            echo "Wrong login!\n"."<br/>";
         }
     }
 }

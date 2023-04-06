@@ -21,7 +21,7 @@
         $username = $_POST['username'];
         $password = $_POST['password'];
 
-        $conn = Connection::registerUser($username, $password);
+        Connection::registerUser($username, $password);
     }  
 }
 ?>
