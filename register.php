@@ -18,13 +18,10 @@
 <?php include 'dbCon.php';{
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
-        $conn = Connection::getConnection();
-        
         $username = $_POST['username'];
         $password = $_POST['password'];
-        
-        $sql = "INSERT INTO Users (id, login, password) VALUES (NULL, :username, :password)";
-        $conn->prepare($sql)->execute(['username' => $username, 'password' => $password]);
+
+        $conn = Connection::registerUser($username, $password);
     }  
 }
 ?>

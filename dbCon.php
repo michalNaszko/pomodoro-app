@@ -35,5 +35,38 @@ class Connection
 
         return self::$instance->conn;
     }
+
+    public static function isUsernameAvailable($username)
+    {
+        $conn = self::getConnection();
+
+        $sql = "SELECT login FROM Users";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        foreach ($stmt->fetchAll() as $user)
+        {
+            if ($user['login'] === $username)
+            {
+                echo 'The following login exists already in db: '.$username."<br/>";
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static function registerUser($username, $password)
+    {
+        if (self::isUsernameAvailable($username))
+        {
+            $conn = self::getConnection();
+
+            $hashPass = password_hash($password, PASSWORD_DEFAULT);
+            
+            $sql = "INSERT INTO Users (id, login, password) VALUES (NULL, :username, :password)";
+            $conn->prepare($sql)->execute(['username' => $username, 'password' => $hashPass]);
+        }
+    }
 }
 ?>
