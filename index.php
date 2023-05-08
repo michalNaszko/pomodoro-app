@@ -1,4 +1,12 @@
- <!DOCTYPE html>
+<?php
+    session_start();
+    if (isset($_GET["logout"]))
+    {
+        $_SESSION['logged']=false;
+    }
+?>
+
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <!-- Required meta tags -->
@@ -22,12 +30,27 @@
 
             <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample08">
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="login.php">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="register.php">Register</a>
-                    </li>
+                    <?php
+                        if($_SESSION['logged']==false)
+                        {
+                    ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="login/login.php">Login</a>
+                            </li>
+                    <?php
+                        }
+                        else
+                        {
+                    ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="statistics/index.php">Statistics</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.php?logout=true">Log Out</a>
+                            </li>
+                    <?php
+                        }
+                    ?>
                 </ul>
             </div>
             </div>

@@ -65,12 +65,15 @@ class Connection
             $hashPass = password_hash($password, PASSWORD_DEFAULT);
             
             $query = "INSERT INTO Users (id, login, password) VALUES (NULL, :username, :password)";
-            $conn->prepare($query)->execute(['username' => $username, 'password' => $hashPass]);
+            return $conn->prepare($query)->execute(['username' => $username, 'password' => $hashPass]);
         }
+
+        return false;
     }
 
     public static function login($username, $password)
     {
+        echo "In login function!\n"."<br/>";
         $login = FALSE;
         $conn = self::getConnection();
 
@@ -85,16 +88,20 @@ class Connection
             {
                 $login = TRUE;
                 echo "You are logged!\n"."<br/>";
+                return true;
             }
             else
             {
                 echo "Wrong password!\n"."<br/>";
+                return false;
             }
         }
         else
         {
             echo "Wrong login!\n"."<br/>";
+            return false;
         }
+        return false;
     }
 }
 ?>

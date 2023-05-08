@@ -30,7 +30,7 @@
 
     
     <!-- Custom styles for this template -->
-    <link href="signin.css" rel="stylesheet">
+    <link href="login.css" rel="stylesheet">
   </head>
   <body class="text-center">
     
@@ -57,13 +57,20 @@
 </html>
 
 
-<?php include 'dbCon.php';{
+<?php include '../dbCon.php';{
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         $username = $_POST['username'];
         $password = $_POST['password'];
 
-        Connection::registerUser($username, $password);
+        if (Connection::registerUser($username, $password))
+        {
+          $_SESSION['logged'] = true;
+          $_SESSION ['username'] = $username;
+          echo $_SESSION ['username'];
+          header("Location: ../index.php");
+          die();
+        }
     }  
 }
 ?>

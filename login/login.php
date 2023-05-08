@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -47,8 +51,11 @@
       <label for="floatingPassword">Password</label>
     </div>
 
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Login</button>
   </form>
+  <div>Do not have account?</div>
+  <a href="register.php" class="link-primary">Create account</a>
+
 </main>
 
 
@@ -56,13 +63,19 @@
   </body>
 </html>
 
-<?php include 'dbCon.php';{
+<?php include '../dbCon.php';{
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     $username = $_POST['username'];
     $password = $_POST['password'];
-
-    Connection::login($username, $password);
+    if (Connection::login($username, $password))
+    {
+      $_SESSION['logged'] = true;
+      $_SESSION ['username'] = $username;
+      echo $_SESSION ['username'];
+      header("Location: ../index.php");
+      die();
+    }
 }  
 }
 ?>
