@@ -53,8 +53,12 @@
   function drawGraph(data) {
     'use strict'
     feather.replace({ 'aria-hidden': 'true' })
-    labels_array = data.map(o => o.Date);
-    data_array = data.map(o => o.Time);
+    labels_array = data.map(label => label.Date);
+    data_array = data.map( function (item) {
+        var time_array = item.Time.split(":");
+        return parseInt(time_array[0]) * 3600 + parseInt(time_array[1]) * 60 + parseInt(time_array[2]);
+      }
+    )
     console.log(data_array);
 
     // Graphs
@@ -74,16 +78,22 @@
         }]
       },
       options: {
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: false
-            }
-          }]
-        },
-        legend: {
-          display: false
-        }
+      //   scales: {
+      //     yAxes: [{
+      //       ticks: {
+      //         beginAtZero: false
+      //       }
+      //     }]
+      //   },
+      //   legend: {
+      //     display: false
+      //   },
+        scaleOverride: true,
+        scaleLabel: function(valuePayload) {
+          console.log("#####################In scaleLabel###################");
+          console.log(new Date(valuePayload.value  * 1000).toISOString());
+         return new Date(valuePayload.value  * 1000).toISOString().substr(12, 7);
+       },
       }
     })
   }
