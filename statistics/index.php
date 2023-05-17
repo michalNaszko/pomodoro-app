@@ -34,6 +34,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script type = "text/javascript" src="dashboard.js"></script>  
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
   </head>
   <body>
 
@@ -61,8 +62,7 @@
 
           <div class="btn-block dropdown me-2">
             <div class="time-list-selected btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-              <span data-feather="calendar"></span>
-              This week
+              <span data-feather="calendar"></span>This week
             </div>
             <ul class="time-list dropdown-menu" aria-labelledby="dropdownMenuLink">
               <li><a class="dropdown-item" href="#">This month</a></li>
@@ -93,18 +93,17 @@
       $(".time-list li a").click(function(){
         var tmp = $(this).text();
         $(this).html($(".time-list-selected:first-child").text());
-        $(".time-list-selected:first-child").html(' <span data-feather="calendar"></span> '+tmp);
-        drawDashBoard(tmp);
+        $(".time-list-selected:first-child").html('<span data-feather="calendar"></span>' + tmp);
+        drawDashBoard(tmp.trim());
         feather.replace(); 
       });
     </script>
 
     <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 
-      <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       <script>
-        drawDashBoard($(".time-list-selected:first-child").text());
+        drawDashBoard($(".time-list-selected:first-child").text().trim());
       </script>
   </body>
 </html>

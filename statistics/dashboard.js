@@ -17,7 +17,7 @@ function drawDashBoard(period) {
           .map(([k, v]) => [k, decycle(v, s)]));
   }
 
-  // console.log("Period passed to drawDashboard: " + period);
+  console.log("Period passed to drawDashboard: " + period);
   console.log("Before HTTP request!\n");
 
   jQuery.ajax({
@@ -54,6 +54,11 @@ function drawDashBoard(period) {
       let time_array = item.Time.split(":");
       return parseInt(time_array[0]) * 3600 + parseInt(time_array[1]) * 60 + parseInt(time_array[2]);
     });
+
+    let chartStatus = Chart.getChart('myChart');
+    if (chartStatus != undefined) {
+      chartStatus.destroy();
+    }
 
     var ctx = document.getElementById('myChart');
     var myNewChart = new Chart(ctx, {
