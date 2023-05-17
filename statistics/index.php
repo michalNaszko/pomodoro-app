@@ -103,6 +103,7 @@
 
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       <script>
+        feather.replace(); 
         drawDashBoard($(".time-list-selected:first-child").text().trim());
       </script>
   </body>
