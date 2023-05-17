@@ -1,6 +1,6 @@
 /* globals Chart:false, feather:false */
 
-function drawDashboard(period) {
+function drawDashBoard(period) {
   function decycle(obj, stack = []) {
     if (!obj || typeof obj !== 'object')
       return obj;
@@ -17,6 +17,7 @@ function drawDashboard(period) {
           .map(([k, v]) => [k, decycle(v, s)]));
   }
 
+  // console.log("Period passed to drawDashboard: " + period);
   console.log("Before HTTP request!\n");
 
   jQuery.ajax({
