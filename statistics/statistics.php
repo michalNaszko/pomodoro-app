@@ -54,8 +54,7 @@ echo json_encode($aResult);
 
                 switch ($period) {
                     case 'This week':
-                        $timeCondition = '(Date >= dateadd(day, 1-datepart(dw, getdate()), CONVERT(date,getdate())) 
-                        AND Date <  dateadd(day, 8-datepart(dw, getdate()), CONVERT(date,getdate())))';
+                        $timeCondition = 'Date >= DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY) AND Date <= CURDATE()';
                         break;
                     case 'This month':
                         $timeCondition = 'MONTH(Date) = MONTH(getdate())';
@@ -69,8 +68,7 @@ echo json_encode($aResult);
 
                 $id = $row['id'];
 
-                $query = 'SET DATEFIRST 1 
-                          SELECT Date, Time FROM'.'`'.$table.'` WHERE (User_id = :id) AND timeCondition ORDER BY Date';
+                $query = 'SELECT Date, Time FROM '.'`'.$table.'` WHERE (User_id = :id) AND '.$timeCondition.' ORDER BY Date';
                 $stmt = $conn->prepare($query);
                 $stmt->execute(['id' => $id]);
 
