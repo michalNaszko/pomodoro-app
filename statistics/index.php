@@ -82,19 +82,21 @@
 
     <script>
       $(".activity-list li a").click(function(){
-        var tmp = $(this).text().trim();
-        console.log(tmp);
-        var activity_type = tmp == "Focus time" ? "activity" : "coffee";
+        var activity = $(this).text().trim();
+        let period = $(".time-list-selected:first-child").text().trim();
+        var activity_type = activity == "Focus time" ? "activity" : "coffee";
         $(this).html($(".activity-list-selected:first-child").text());
-        $(".activity-list-selected:first-child").html(' <span data-feather="' + activity_type + '"></span> '+tmp);
+        $(".activity-list-selected:first-child").html(' <span data-feather="' + activity_type + '"></span> '+ activity);
+        drawDashBoard(period, activity);
         feather.replace(); 
       });
 
       $(".time-list li a").click(function(){
-        var tmp = $(this).text();
+        let period = $(this).text().trim();
+        let activity = $(".activity-list-selected:first-child").text().trim();
         $(this).html($(".time-list-selected:first-child").text());
-        $(".time-list-selected:first-child").html('<span data-feather="calendar"></span>' + tmp);
-        drawDashBoard(tmp.trim());
+        $(".time-list-selected:first-child").html('<span data-feather="calendar"></span>' + period);
+        drawDashBoard(period, activity);
         feather.replace(); 
       });
     </script>
@@ -103,8 +105,10 @@
 
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       <script>
-        feather.replace(); 
-        drawDashBoard($(".time-list-selected:first-child").text().trim());
+        feather.replace();
+        let period = $(".time-list-selected:first-child").text().trim();
+        let activity = $(".activity-list-selected:first-child").text().trim();
+        drawDashBoard(period, activity);
       </script>
   </body>
 </html>

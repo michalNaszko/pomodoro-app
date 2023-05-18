@@ -1,6 +1,6 @@
 /* globals Chart:false, feather:false */
 
-function drawDashBoard(period) {
+function drawDashBoard(period, activity) {
   function decycle(obj, stack = []) {
     if (!obj || typeof obj !== 'object')
       return obj;
@@ -18,13 +18,14 @@ function drawDashBoard(period) {
   }
 
   console.log("Period passed to drawDashboard: " + period);
+  console.log("Activity passed to drawDashboard: " + activity);
   console.log("Before HTTP request!\n");
 
   jQuery.ajax({
     type: "POST",
     url: 'statistics.php',
     dataType: 'json',
-    data: { functionname: 'retrieveStatistics' },
+    data: { functionname: 'retrieveStatistics', period: period, activity: activity },
 
     success: function (obj, textstatus, jqXHR) {
       if (!('error' in obj)) {
