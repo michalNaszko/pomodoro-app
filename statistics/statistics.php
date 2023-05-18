@@ -52,9 +52,25 @@ echo json_encode($aResult);
                         return null;
                 }
 
+                switch ($period) {
+                    case 'This week':
+                        $timeCondition = '(Date >= dateadd(day, 1-datepart(dw, getdate()), CONVERT(date,getdate())) 
+                        AND Date <  dateadd(day, 8-datepart(dw, getdate()), CONVERT(date,getdate())))';
+                        break;
+                    case 'This month':
+                        $timeCondition = 'MONTH(Date) = MONTH(getdate())';
+                        break;
+                    case 'Last month':
+                        $timeCondition = 'MONTH(Date) = (MONTH(getdate()) - 1)';
+                        break;
+                    default:
+                        return null;
+                }
+
                 $id = $row['id'];
 
-                $query = 'SELECT Date, Time FROM'.'`'.$table.'` WHERE (User_id = :id) ORDER BY Date';
+                $query = 'SET DATEFIRST 1 
+                          SELECT Date, Time FROM'.'`'.$table.'` WHERE (User_id = :id) AND timeCondition ORDER BY Date';
                 $stmt = $conn->prepare($query);
                 $stmt->execute(['id' => $id]);
 
