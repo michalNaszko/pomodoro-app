@@ -30,7 +30,7 @@ function drawDashBoard(period, activity) {
     success: function (obj, textstatus, jqXHR) {
       if (!('error' in obj)) {
         console.log(obj.result);
-        drawGraph(obj.result);
+        drawGraph(obj.result, period);
       }
       else {
         console.log(obj.error);
@@ -48,7 +48,7 @@ function drawDashBoard(period, activity) {
 
   console.log("After HTTP request!\n");
 
-  function drawGraph(data_in) {
+  function drawGraph(data_in, period) {
 
     var labels_array = data_in.map(label => label.Date);
     var data_array = data_in.map(function (item) {
@@ -63,7 +63,7 @@ function drawDashBoard(period, activity) {
 
     var ctx = document.getElementById('myChart');
     var myNewChart = new Chart(ctx, {
-      type: "line",
+      type: "bar",
       data: {
         labels: labels_array,
         datasets: [{
@@ -93,7 +93,16 @@ function drawDashBoard(period, activity) {
           title: {
             display: true,
             text: (function () {
-              return "Happy chart!!!";
+              if (period == 'This month' ||
+                  period == 'Last month')
+              {
+                const date = new Date();
+                if (period == 'Last month')
+                  date.setDate(0);
+                const month = date.toLocaleString('default', { month: 'long' });
+                return month;
+              }
+              return period;
             })(),
             font: {
               size: 18
