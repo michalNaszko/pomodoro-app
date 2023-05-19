@@ -65,6 +65,7 @@
               <span data-feather="calendar"></span>This week
             </div>
             <ul class="time-list dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <li><a class="dropdown-item" href="#">Last week</a></li>
               <li><a class="dropdown-item" href="#">This month</a></li>
               <li><a class="dropdown-item" href="#">Last month</a></li>
             </ul> 

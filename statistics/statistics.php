@@ -56,11 +56,14 @@ echo json_encode($aResult);
                     case 'This week':
                         $timeCondition = 'Date >= DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY) AND Date <= CURDATE()';
                         break;
+                    case 'Last week':
+                        $timeCondition = 'WEEK(Date, 1) = WEEK(DATE_SUB(CURDATE(), INTERVAL 1 WEEK), 1)';
+                        break;
                     case 'This month':
-                        $timeCondition = 'MONTH(Date) = MONTH(getdate())';
+                        $timeCondition = 'MONTH(Date) = MONTH(CURDATE())';
                         break;
                     case 'Last month':
-                        $timeCondition = 'MONTH(Date) = (MONTH(getdate()) - 1)';
+                        $timeCondition = 'MONTH(Date) = (MONTH(CURDATE()) - 1)';
                         break;
                     default:
                         return null;
