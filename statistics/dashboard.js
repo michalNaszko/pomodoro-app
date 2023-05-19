@@ -84,6 +84,18 @@ function drawDashBoard(period, activity) {
                 return step < 1800 ? 1800 : step;
               })(),
             }
+          },
+          x: {
+            ticks: {
+              callback: function (val, index, ticks) {
+                if (period.includes('month'))
+                {
+                  return this.getLabelForValue(val).replace(/.*?-/, "");
+                }
+                const weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+                return weekdays[index];
+              },
+            }
           }
         },
         plugins: {
