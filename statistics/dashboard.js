@@ -1,21 +1,22 @@
 /* globals Chart:false, feather:false */
 
 function drawDashBoard(period, activity) {
-  function decycle(obj, stack = []) {
-    if (!obj || typeof obj !== 'object')
-      return obj;
+  // TODO: this is to remove, but befor it I want to understant this code!!!
+  // function decycle(obj, stack = []) {
+  //   if (!obj || typeof obj !== 'object')
+  //     return obj;
 
-    if (stack.includes(obj))
-      return null;
+  //   if (stack.includes(obj))
+  //     return null;
 
-    let s = stack.concat([obj]);
+  //   let s = stack.concat([obj]);
 
-    return Array.isArray(obj)
-      ? obj.map(x => decycle(x, s))
-      : Object.fromEntries(
-        Object.entries(obj)
-          .map(([k, v]) => [k, decycle(v, s)]));
-  }
+  //   return Array.isArray(obj)
+  //     ? obj.map(x => decycle(x, s))
+  //     : Object.fromEntries(
+  //       Object.entries(obj)
+  //         .map(([k, v]) => [k, decycle(v, s)]));
+  // }
 
   console.log("Period passed to drawDashboard: " + period);
   console.log("Activity passed to drawDashboard: " + activity);
@@ -49,6 +50,41 @@ function drawDashBoard(period, activity) {
   console.log("After HTTP request!\n");
 
   function drawGraph(data_in, period) {
+
+    const getAllDaysInMonth = (date) =>
+      Array.from(
+        { length: new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate() },
+        (_, i) => (new Date(date.getFullYear(), date.getMonth(), i + 1)).toISOString().replace(/(.*?)(T.*)/, "$1")
+      );
+    
+    const getAllDaysInWeek = (date) =>
+      Array.from(
+        { length: 7 },
+        (_, i) => (new Date(date.getFullYear(), date.getMonth(), date.getDate() - ((date.getDay() + 6) % 7) + i)).toISOString().replace(/(.*?)(T.*)/, "$1")
+      );
+    
+    var date = new Date();
+    var labels_array = null;
+    switch (period) {
+      case 'This month':
+        labels_array = getAllDaysInMonth(date);
+        break;
+      case 'Last month':
+        date.setDate(0);
+        labels_array = getAllDaysInMonth(date);
+        break;
+      case 'This week':
+        labels_array = getAllDaysInWeek(date);
+        break;
+      case 'Last week':
+        date.setDate(date.getDate() - 7);
+        labels_array = getAllDaysInWeek(date);
+        break;
+    }
+
+    console.log("#########");
+    console.log(labels_array);
+    console.log("#########");
 
     var labels_array = data_in.map(label => label.Date);
     var data_array = data_in.map(function (item) {
