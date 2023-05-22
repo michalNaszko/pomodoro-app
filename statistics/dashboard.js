@@ -60,7 +60,9 @@ function drawDashBoard(period, activity) {
     const getAllDaysInWeek = (date) =>
       Array.from(
         { length: 7 },
-        (_, i) => (new Date(date.getFullYear(), date.getMonth(), date.getDate() - ((date.getDay() + 6) % 7) + i)).toISOString().replace(/(.*?)(T.*)/, "$1")
+        (_, i) => (new Date(date.getFullYear(), 
+                            date.getMonth(), 
+                            date.getDate() - ((date.getDay() + 6) % 7) + i + 1)).toISOString().replace(/(.*?)(T.*)/, "$1") // Adding one is a riddle
       );
     
     var date = new Date();
@@ -82,15 +84,22 @@ function drawDashBoard(period, activity) {
         break;
     }
 
-    console.log("#########");
-    console.log(labels_array);
-    console.log("#########");
+    var data_array = new Array(labels_array.length).fill(0);
 
-    var labels_array = data_in.map(label => label.Date);
-    var data_array = data_in.map(function (item) {
-      let time_array = item.Time.split(":");
-      return parseInt(time_array[0]) * 3600 + parseInt(time_array[1]) * 60 + parseInt(time_array[2]);
-    });
+    if (data_in !== null && data_in.length !== 0)
+    {
+      var j = 0;
+      labels_array.every(function (value, i) {
+        if (value == data_in[j].Date) {
+          let time_array = data_in[j].Time.split(":");
+          data_array[i] = parseInt(time_array[0]) * 3600 + parseInt(time_array[1]) * 60 + parseInt(time_array[2])
+          j++;
+          if (j >= data_in.length)
+            return false;
+        }
+        return true;
+      });
+    }
 
     let chartStatus = Chart.getChart('myChart');
     if (chartStatus != undefined) {
