@@ -1,27 +1,6 @@
 /* globals Chart:false, feather:false */
 
 function drawDashBoard(period, activity) {
-  // TODO: this is to remove, but befor it I want to understant this code!!!
-  // function decycle(obj, stack = []) {
-  //   if (!obj || typeof obj !== 'object')
-  //     return obj;
-
-  //   if (stack.includes(obj))
-  //     return null;
-
-  //   let s = stack.concat([obj]);
-
-  //   return Array.isArray(obj)
-  //     ? obj.map(x => decycle(x, s))
-  //     : Object.fromEntries(
-  //       Object.entries(obj)
-  //         .map(([k, v]) => [k, decycle(v, s)]));
-  // }
-
-  console.log("Period passed to drawDashboard: " + period);
-  console.log("Activity passed to drawDashboard: " + activity);
-  console.log("Before HTTP request!\n");
-
   jQuery.ajax({
     type: "POST",
     url: 'statistics.php',
@@ -47,14 +26,12 @@ function drawDashBoard(period, activity) {
     }
   });
 
-  console.log("After HTTP request!\n");
-
   function drawGraph(data_in, period) {
 
     const getAllDaysInMonth = (date) =>
       Array.from(
         { length: new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate() },
-        (_, i) => (new Date(date.getFullYear(), date.getMonth(), i + 1)).toISOString().replace(/(.*?)(T.*)/, "$1")
+        (_, i) => (new Date(date.getFullYear(), date.getMonth(), i + 1 + 1)).toISOString().replace(/(.*?)(T.*)/, "$1") // Adding another one is a riddle
       );
     
     const getAllDaysInWeek = (date) =>
@@ -124,7 +101,7 @@ function drawDashBoard(period, activity) {
                 return new Date(val * 1000).toISOString().substring(11, 16);
               },
               stepSize: (function () {
-                var maxAxisValue = Math.max(...data_array) * 0.9; // add 10%
+                var maxAxisValue = Math.max(...data_array);// * 0.9; // add 10%
                 var step = Math.ceil((Math.ceil(maxAxisValue / 1800) / 10)) * 1800;
                 return step < 1800 ? 1800 : step;
               })(),
@@ -176,5 +153,4 @@ function drawDashBoard(period, activity) {
       }
     });
   }
-
 };
