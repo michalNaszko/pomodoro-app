@@ -12,7 +12,7 @@ window.onload = function () {
         ["btn-time-lBreak", "10:00"]
       ]);
 
-    const btns_time = document.querySelectorAll("[id^=btn-time]")
+    const btns_time = document.querySelectorAll("[id^=btn-time]");
 
     btns_time.forEach( function(item, index){
         item.addEventListener("click", function() {
@@ -30,31 +30,54 @@ window.onload = function () {
         });
     })
 
+    var timer = null;
+    var isPaused = false;
     const btn_start = document.getElementById("btn-start");
     btn_start.addEventListener("click", function() {
-        
-        const time = document.getElementById("timer-string").innerHTML.split(':');
-        var countDownDate = new Date().getTime();
-        countDownDate += Number(time[0]) * 60 * 1000 + Number(time[1]) * 1000;
 
-        var x = setInterval(function() {
+        console.log("In event listener");
+        console.log(btn_start.textContent);
+        
+        if (btn_start.textContent == "Start")
+        {
+            btn_start.textContent = "Stop";
+            const time = document.getElementById("timer-string").innerHTML.split(':');
+            var countDownDate = new Date().getTime();
+            countDownDate += Number(time[0]) * 60 * 1000 + Number(time[1]) * 1000;
+            console.log("countDownDate1: " + countDownDate);
+            isPaused = false;
 
-            var now = new Date().getTime();
-        
-            var distance = countDownDate - now;
-        
-            var minutes = Math.floor(distance % (60 * 60 * 1000) / (60 * 1000));
-            var seconds = Math.floor(distance % (60 * 1000) / 1000);
-            
-            if (minutes < 0) minutes = 0;
-            if (seconds < 0) seconds = 0;
-            
-            var seconds_str = seconds < 10 ? ("0" + seconds) : seconds;
-            document.getElementById("timer-string").innerHTML = minutes + ":" + seconds_str;
-        
-            if (distance <= 0) {
-                clearInterval(x);
+            if (timer != null)
+            {
+                clearInterval(timer);
             }
-        }, 1000);
+
+            timer = setInterval(function() {
+                if (!isPaused)
+                {
+                    var now = new Date().getTime();
+                    var distance = countDownDate - now;
+                
+                    var minutes = Math.floor(distance % (60 * 60 * 1000) / (60 * 1000));
+                    var seconds = Math.floor(distance % (60 * 1000) / 1000);
+                    
+                    if (minutes < 0) minutes = 0;
+                    if (seconds < 0) seconds = 0;
+                    
+                    var seconds_str = seconds < 10 ? ("0" + seconds) : seconds;
+                    document.getElementById("timer-string").innerHTML = minutes + ":" + seconds_str;
+                
+                    if (distance <= 0) {
+                        clearInterval(timer);
+                    }
+                }               
+            }, 1000);
+        }
+        else
+        {
+            btn_start.textContent = "Start";
+            isPaused = true;
+        }
+        
     });
 } 
