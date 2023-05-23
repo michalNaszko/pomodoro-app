@@ -1,5 +1,7 @@
 window.onload = function () {
 
+    var activityFlag = "btn-time-work";
+
     const times = new Map([
         ["btn-time-work", "25:00"],
         ["btn-time-sBreak", "5:00"],
@@ -18,6 +20,7 @@ window.onload = function () {
         item.addEventListener("click", function() {
             document.getElementById("timer-string").innerHTML = times.get(item.getAttribute("id"));
             times_backup[item.getAttribute("id")] = times.get(item.getAttribute("id"));
+            activityFlag = item.getAttribute("id");
         });
 
         item.addEventListener("mouseover", function() {
@@ -34,9 +37,6 @@ window.onload = function () {
     var isPaused = false;
     const btn_start = document.getElementById("btn-start");
     btn_start.addEventListener("click", function() {
-
-        console.log("In event listener");
-        console.log(btn_start.textContent);
         
         if (btn_start.textContent == "Start")
         {
@@ -44,7 +44,6 @@ window.onload = function () {
             const time = document.getElementById("timer-string").innerHTML.split(':');
             var countDownDate = new Date().getTime();
             countDownDate += Number(time[0]) * 60 * 1000 + Number(time[1]) * 1000;
-            console.log("countDownDate1: " + countDownDate);
             isPaused = false;
 
             if (timer != null)
@@ -69,6 +68,7 @@ window.onload = function () {
                 
                     if (distance <= 0) {
                         clearInterval(timer);
+                        addTimeDB(activityFlag);
                     }
                 }               
             }, 1000);
@@ -80,4 +80,31 @@ window.onload = function () {
         }
         
     });
+
+    function addTimeDB (activity)
+    {
+        jQuery.ajax({
+            type: "POST",
+            url: 'updateTime.php',
+            dataType: 'json',
+            data: { functionname: 'updateTime', time: times.get(activity), activity: activity },
+        
+            success: function (obj, textstatus, jqXHR) {
+              if (!('error' in obj)) {
+                console.log(obj.result);
+              }
+              else {
+                console.log(obj.error);
+              }
+            },
+        
+            complete: function (jqXHR, textStatus) {
+              console.log("Completed!!!");
+            },
+        
+            error: function (jqXHR, textStatus, errorThrown) {
+              console.log("Error: " + textStatus + " " + errorThrown);
+            }
+          });
+    }
 } 
