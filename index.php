@@ -61,12 +61,12 @@
         <div class="timer-container p-5 text-white bg-dark rounded-3">
 
             <div class="d-flex bd-highlight">
-                <button id="btn-time-work" class="p-2 flex-fill btn btn-outline-light" type="button">Work</button>
+                <button id="btn-time-work" class="p-2 flex-fill btn btn-outline-light active" type="button">Work</button>
                 <button id="btn-time-sBreak" class="p-2 flex-fill btn btn-outline-light" type="button">Short break</button>
                 <button id="btn-time-lBreak" class="p-2 flex-fill btn btn-outline-light" type="button">Long break</button>
             </div>
 
-            <div id="timer-string" class="blocktext">25:00</div>
+            <div id="timer-string" class="blocktext">00:05</div>
 
             <button id="btn-start" class="start btn btn-outline-light" type="button">Start</button>
 

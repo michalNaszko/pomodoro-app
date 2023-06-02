@@ -21,6 +21,8 @@ window.onload = function () {
             document.getElementById("timer-string").innerHTML = times.get(item.getAttribute("id"));
             times_backup[item.getAttribute("id")] = times.get(item.getAttribute("id"));
             activityFlag = item.getAttribute("id");
+            btns_time.forEach (element => element.classList.remove("active"));
+            item.classList.add("active");
         });
 
         item.addEventListener("mouseover", function() {
@@ -64,10 +66,12 @@ window.onload = function () {
                     if (seconds < 0) seconds = 0;
                     
                     var seconds_str = seconds < 10 ? ("0" + seconds) : seconds;
-                    document.getElementById("timer-string").innerHTML = minutes + ":" + seconds_str;
+                    var minutes_str = minutes < 10 ? ("0" + minutes) : minutes;
+                    document.getElementById("timer-string").innerHTML = minutes_str + ":" + seconds_str;
                 
                     if (distance <= 0) {
                         clearInterval(timer);
+                        playSound("alarm.wav");
                         addTimeDB(activityFlag);
                     }
                 }               
@@ -107,4 +111,9 @@ window.onload = function () {
             }
           });
     }
-} 
+
+    function playSound(url) {
+      const audio = new Audio(url);
+      audio.play();
+    }
+}
