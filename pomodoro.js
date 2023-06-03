@@ -85,6 +85,11 @@ window.onload = function () {
         
     });
 
+    const btn_rm_account = document.getElementById("btn-remove-account");
+    btn_rm_account.addEventListener("click", function() {
+      removeAccount();
+    });
+
     function addTimeDB (activity)
     {
         jQuery.ajax({
@@ -110,6 +115,34 @@ window.onload = function () {
               console.log("Error: " + textStatus + " " + errorThrown);
             }
           });
+    }
+
+    function removeAccount ()
+    {
+        jQuery.ajax({
+          type: "POST",
+          url: 'removeAccount.php',
+          dataType: 'json',
+          data: { functionname: 'removeAccount' },
+      
+          success: function (obj, textstatus, jqXHR) {
+            if (!('error' in obj)) {
+              console.log(obj.result);
+              window.location.href = 'index.php?logout=true';
+            }
+            else {
+              console.log(obj.error);
+            }
+          },
+      
+          complete: function (jqXHR, textStatus) {
+            console.log("Completed!!!");
+          },
+      
+          error: function (jqXHR, textStatus, errorThrown) {
+            console.log("Error: " + textStatus + " " + errorThrown);
+          }
+        });
     }
 
     function playSound(url) {

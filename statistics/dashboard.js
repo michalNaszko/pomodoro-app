@@ -27,6 +27,8 @@ function drawDashBoard(period, activity) {
   });
 
   function drawGraph(data_in, period) {
+    console.log(data_in);
+    console.log(period);
 
     const getAllDaysInMonth = (date) =>
       Array.from(

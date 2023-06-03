@@ -48,6 +48,9 @@
                                 <a class="nav-link" href="#" onclick="goToStatistics();">Statistics</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Remove Account</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="index.php?logout=true">Log Out</a>
                             </li>
                     <?php
@@ -95,5 +98,22 @@
                 return false;
             }
         </script>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    Are you sure that you want to remove account?
+                </div>
+                <div class="modal-footer">
+                    <button id="btn-remove-account" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Yes</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+        </div>
+
     </body>
 </html> 
