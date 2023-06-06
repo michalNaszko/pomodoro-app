@@ -2,80 +2,51 @@
 session_start();
 ?>
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>My first PHP Website</title>
+<div class="modal-header border-bottom-0">
+  <button type="button" class="btn-close" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+  <div class="form-title text-center">
+    <h4>Login</h4>
+  </div>
+  <div class="d-flex flex-column text-center">
+    <form action="login/login.php" method="POST" id="login-form">
+      <div class="flex-item form-group">
+        <input type="email" class="form-control" id="email1" name="username" placeholder="Your email address...">
+      </div>
+      <div class="flex-item form-group">
+        <input type="password" class="form-control" id="password1" name="password" placeholder="Your password...">
+      </div>
+      <button type="submit" class="btn btn-info btn-block btn-round flex-item">Login</button>
+    </form>
+  </div>
+</div>
+<div class="modal-footer d-flex justify-content-center">
+  <div class="signup-section">Do not have account? <a href="#a" class="text-info"> Create account</a>.</div>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/">
 
-    
+  <script>
+    $(".btn-close").click(function() {
+      $("#loginModal").modal('hide');
+    });
 
-    <!-- Bootstrap core CSS -->
-<link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    $('.text-info').on('click', function(e) {
+            $('#loginModal').modal('show').find('.modal-content').load("login/register.php");
+    });
+  </script>
 
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
+  <?php include '../dbCon.php'; {
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      $username = $_POST['username'];
+      $password = $_POST['password'];
+      if (Connection::login($username, $password)) {
+        $_SESSION['logged'] = true;
+        $_SESSION['username'] = $username;
+        echo $_SESSION['username'];
+        header("Location: ../index.php");
+        die();
       }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-    </style>
-
-    
-    <!-- Custom styles for this template -->
-    <link href="login.css" rel="stylesheet">
-  </head>
-  <body class="text-center">
-    
-<main class="form-signin">
-  <form action="login.php" method="POST">
-    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-
-    <div class="form-floating">
-      <input name="username" type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-      <label for="floatingInput">Email address</label>
-    </div>
-    <div class="form-floating">
-      <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
-      <label for="floatingPassword">Password</label>
-    </div>
-
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Login</button>
-  </form>
-  <div>Do not have account?</div>
-  <a href="register.php" class="link-primary">Create account</a>
-
-</main>
-
-
-    
-  </body>
-</html>
-
-<?php include '../dbCon.php';{
-
-if($_SERVER["REQUEST_METHOD"] == "POST"){
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    if (Connection::login($username, $password))
-    {
-      $_SESSION['logged'] = true;
-      $_SESSION ['username'] = $username;
-      echo $_SESSION ['username'];
-      header("Location: ../index.php");
-      die();
     }
-}  
-}
-?>
+  }
+  ?>
