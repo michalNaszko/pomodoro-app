@@ -88,16 +88,12 @@ if (!isset($_SESSION['logged'])) {
         });
 
         function goToStatistics() {
-            console.log("In goToStatistics!!!");
             var sessionExist = '<?php echo isset($_SESSION['logged']); ?>';
-            console.log("1 In goToStatistics!!!");
             if (sessionExist) {
                 var isLogged = '<?php echo $_SESSION['logged']; ?>';
-                console.log("2 In goToStatistics!!!");
                 console.log(isLogged);
                 if (isLogged) {
-                    console.log("3 In goToStatistics!!!");
-                    window.location.href = 'statistics/index.php';
+                    window.location.href = 'statistics/statistics.php';
                     return false;
                 }
             }
