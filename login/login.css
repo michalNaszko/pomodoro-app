@@ -3,10 +3,10 @@
 }
 
 @media (min-width: 576px) {
-  .modal-dialog {
+  .modal-login {
     max-width: 400px;
   }
-  .modal-dialog .modal-content {
+  .modal-login .modal-content {
     padding: 1rem;
   }
 }

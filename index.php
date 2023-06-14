@@ -18,12 +18,15 @@ if (!isset($_SESSION['logged'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type = "text/javascript" src="statistics/dashboard.js"></script>  
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <link rel="stylesheet" href="index.css">
     <link href="login/login.css" rel="stylesheet">
+    <link href="statistics/dashboard.css" rel="stylesheet">
     <title>Pomodoro</title>
 
 </head>
@@ -93,19 +96,19 @@ if (!isset($_SESSION['logged'])) {
                 var isLogged = '<?php echo $_SESSION['logged']; ?>';
                 console.log(isLogged);
                 if (isLogged) {
-                    window.location.href = 'statistics/statistics.php';
-                    return false;
+                    $('#loginStat').modal('show').find('.modal-content').load("statistics/statisticsModal.php");
+                    // return false;
                 }
             }
-            window.location.href = 'index.php';
-            return false;
+            // window.location.href = 'index.php';
+            // return false;
         }
     </script>
 
 
     <!-- Modal for removing account -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-removing">
             <div class="modal-content">
                 <div class="modal-body">
                     Are you sure that you want to remove account?
@@ -120,7 +123,15 @@ if (!isset($_SESSION['logged'])) {
     
     <!-- Modal for login/register -->
     <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-login" role="document">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for statistics -->
+    <div class="modal fade" id="loginStat" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-fullscreen-xl-down modal-dialog-centered modal-stat" role="document">
             <div class="modal-content">
             </div>
         </div>

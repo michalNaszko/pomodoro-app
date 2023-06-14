@@ -3,7 +3,7 @@
 function drawDashBoard(period, activity) {
   jQuery.ajax({
     type: "POST",
-    url: 'retrieveStatistics.php',
+    url: 'statistics/retrieveStatistics.php',
     dataType: 'json',
     data: { functionname: 'retrieveStatistics', period: period, activity: activity },
 
