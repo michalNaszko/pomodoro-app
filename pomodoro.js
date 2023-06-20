@@ -87,7 +87,14 @@ window.onload = function () {
 
     const btn_rm_account = document.getElementById("btn-remove-account");
     btn_rm_account.addEventListener("click", function() {
-      removeAccount();
+      if (isLogged() === true)
+      {
+        removeAccount();
+      }
+      else
+      {
+        window.location.reload();
+      }
     });
 
     function addTimeDB (activity)
@@ -148,5 +155,22 @@ window.onload = function () {
     function playSound(url) {
       const audio = new Audio(url);
       audio.play();
+    }
+
+    function isLogged() {
+      jQuery.ajax({
+        type: "GET",
+        url: 'login/isLogged.php',
+        dataType: 'json',
+    
+        success: function (obj, textstatus, jqXHR) {
+          return obj.result;
+        },
+    
+        error: function (jqXHR, textStatus, errorThrown) {
+          console.log("Error: " + textStatus + " " + errorThrown);
+          return false;
+        }
+      })
     }
 }

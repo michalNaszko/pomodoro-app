@@ -58,18 +58,11 @@
     });
 
     feather.replace();
-    let period = $(".time-list-selected:first-child").text().trim();
-    let activity = $(".activity-list-selected:first-child").text().trim();
+    var period = $(".time-list-selected:first-child").text().trim();
+    var activity = $(".activity-list-selected:first-child").text().trim();
+    drawDashBoard(period, activity);
+  }
+  else {
     drawDashBoard(period, activity);
   }
 </script>
-
-<!-- <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-  feather.replace();
-  let period = $(".time-list-selected:first-child").text().trim();
-  let activity = $(".activity-list-selected:first-child").text().trim();
-  drawDashBoard(period, activity);
-</script> -->

@@ -43,7 +43,6 @@ session_start();
       if (Connection::login($username, $password)) {
         $_SESSION['logged'] = true;
         $_SESSION['username'] = $username;
-        echo $_SESSION['username'];
         header("Location: ../index.php");
         die();
       }

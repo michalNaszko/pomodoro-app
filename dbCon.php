@@ -73,7 +73,6 @@ class Connection
 
     public static function login($username, $password)
     {
-        echo "In login function!\n"."<br/>";
         $login = FALSE;
         $conn = self::getConnection();
 
@@ -98,7 +97,6 @@ class Connection
         }
         else
         {
-            echo "Wrong login!\n"."<br/>";
             return false;
         }
         return false;

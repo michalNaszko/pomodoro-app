@@ -97,11 +97,11 @@ if (!isset($_SESSION['logged'])) {
                 console.log(isLogged);
                 if (isLogged) {
                     $('#loginStat').modal('show').find('.modal-content').load("statistics/statisticsModal.php");
-                    // return false;
+                    return false;
                 }
             }
-            // window.location.href = 'index.php';
-            // return false;
+            window.location.href = 'index.php';
+            return false;
         }
     </script>
 
