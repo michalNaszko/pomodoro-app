@@ -86,12 +86,10 @@ class Connection
             if (password_verify($password, $row['password']))
             {
                 $login = TRUE;
-                echo "You are logged!\n"."<br/>";
                 return true;
             }
             else
             {
-                echo "Wrong password!\n"."<br/>";
                 return false;
             }
         }
