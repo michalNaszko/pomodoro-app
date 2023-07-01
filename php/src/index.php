@@ -75,7 +75,7 @@ if (!isset($_SESSION['logged'])) {
             <button id="btn-time-lBreak" class="p-2 flex-fill btn btn-outline-light" type="button">Long break</button>
         </div>
 
-        <div id="timer-string" class="blocktext">00:08</div>
+        <div id="timer-string" class="blocktext">25:00</div>
 
         <button id="btn-start" class="start btn btn-outline-light" type="button">Start</button>
 

@@ -1,21 +1,10 @@
 # pomodoro-app
 
-Ubuntu server configuration steps:
-1. Create file pomodoro-app.conf in the following directory: /etc/apache2/sites-available/
-2. Put in this file the following contents:
-    <VirtualHost *:80>
-
-        ServerAdmin webmaster@localhost
-        DocumentRoot /var/www/pomodoro-app
-            ServerName pomodoro
-        ServerAlias www.pomodoro
-
-        ErrorLog ${APACHE_LOG_DIR}/error.log
-        CustomLog ${APACHE_LOG_DIR}/access.log combined
-
-        SetEnv mysql.default.user "your MySql user name"             <-- You need to configure it!!!
-        SetEnv mysql.default.password "your MySql password"          <-- You need to configure it!!!
-        SetEnv mysql.default.servername "name of your host with db"  <-- You need to configure it!!!
-        SetEnv mysql.default.db "db name"                            <-- You need to configure it!!!
-
-    </VirtualHost>
+To start this app at your machine execute:
+sudo ./startDocker.sh
+Notice:
+Script 'startDocker.sh' remove all docker containers and images from system, so in case when there are another docker images at your machine execute the following command:
+docker swarm init
+openssl rand -base64 12 | docker secret create db_root_password -
+docker compose build
+docker stack deploy --compose-file=docker-compose.yml db_root_password
