@@ -43,10 +43,10 @@ echo json_encode($aResult);
             {
                 switch ($activity) {
                     case 'Break time':
-                        $table = 'Break Time';
+                        $table = 'BreakTime';
                         break;
                     case 'Focus time':
-                        $table = 'Work Time';
+                        $table = 'WorkTime';
                         break;
                     default:
                         return null;

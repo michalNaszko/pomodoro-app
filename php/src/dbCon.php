@@ -6,15 +6,24 @@ class Connection
 
     private function __construct()
     {        
-        $servername = getenv("mysql.default.servername");
-        $username = getenv("mysql.default.user");
-        $password = getenv("mysql.default.password");
-        $db = getenv("mysql.default.db");
+        $servername = "db";
+        $username = "root";
+        $password = rtrim(file_get_contents("/run/secrets/db_root_password"));
+        $db = "pomodoro";
 
         try {
-            $this->conn = new PDO("mysql:host=$servername;dbname=$db", 
-                             $username, $password);
+            $this->conn = new PDO("mysql:host=$servername",$username, $password);
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $sql = "CREATE DATABASE if not exists " . $db;
+            $this->conn->exec($sql);
+            $this->conn = null;
+            $this->conn = new PDO("mysql:host=$servername;dbname=$db", $username, $password);
+            $sql = "CREATE TABLE if not exists Users (id int not null auto_increment primary key, login text not null, password text not null)";
+            $this->conn->exec($sql);
+            $sql = "CREATE TABLE if not exists WorkTime (User_id int, Date date not null, Time time not null)";
+            $this->conn->exec($sql);
+            $sql = "CREATE TABLE if not exists BreakTime (User_id int, Date date not null, Time time not null)";
+            $this->conn->exec($sql);
             
         }
         catch(PDOException $e) {

@@ -44,11 +44,11 @@ echo json_encode($aResult);
                 $id = $row['id'];
 
                 if (strpos($activity, "work") !== false) {
-                    $table = 'Work Time';
+                    $table = 'WorkTime';
                 }
                 else
                 {
-                    $table = 'Break Time';
+                    $table = 'BreakTime';
                 }
 
                 $query = 'SELECT Date, Time FROM '.'`'.$table.'` WHERE (User_id = :id) AND (Date = CURDATE()) ORDER BY Date';

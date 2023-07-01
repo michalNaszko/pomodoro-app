@@ -1,43 +1,42 @@
+<?php include '../dbCon.php'; {
+session_start();
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $username = $_POST['username'];
+  $password = $_POST['password'];
+
+  if (Connection::registerUser($username, $password)) {
+    $_SESSION['logged'] = true;
+    $_SESSION['username'] = $username;
+    header("Location: ../index.php");
+    die();
+  }
+}
+}
+?>
+
 <div class="modal-header border-bottom-0">
   <button type="button" class="btn-close" aria-label="Close"></button>
 </div>
 <div class="modal-body">
   <div class="form-title text-center">
-    <h4>Login</h4>
+    <h4>Register</h4>
   </div>
   <div class="d-flex flex-column text-center">
-    <form action="" method="" id="login-form">
+    <form action="login/register.php" method="POST" id="login-form">
       <div class="flex-item form-group">
         <input type="email" class="form-control" id="email1" name="username" placeholder="Your email address...">
       </div>
       <div class="flex-item form-group">
         <input type="password" class="form-control" id="password1" name="password" placeholder="Your password...">
       </div>
-      <button type="submit" class="btn btn-info btn-block btn-round flex-item" id="login-btn">Login</button>
+      <button type="submit" class="btn btn-info btn-block btn-round flex-item">Register</button>
     </form>
   </div>
 </div>
 <div class="modal-footer d-flex justify-content-center">
-  <div class="signup-section">Do not have account? <a href="#a" class="text-info"> Create account</a>.</div>
-
 
   <script>
     $(".btn-close").click(function() {
       $("#loginModal").modal('hide');
-    });
-
-    $('.text-info').on('click', function(e) {
-      $('#loginModal').modal('show').find('.modal-content').load("login/register.php");
-    });
-
-    $('#login-btn').on('click', function(e) {
-      $.ajax({
-            url: 'login/login.php',
-            type: 'POST',
-            data:$('#login-form').serialize(),
-            success:function(){
-                // Whatever you want to do after the form is successfully submitted
-            }
-        });
     });
   </script>

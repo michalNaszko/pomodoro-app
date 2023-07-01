@@ -87,14 +87,7 @@ window.onload = function () {
 
     const btn_rm_account = document.getElementById("btn-remove-account");
     btn_rm_account.addEventListener("click", function() {
-      if (isLogged() === true)
-      {
-        removeAccount();
-      }
-      else
-      {
-        window.location.reload();
-      }
+      removeAccount();
     });
 
     function addTimeDB (activity)
@@ -171,6 +164,6 @@ window.onload = function () {
           console.log("Error: " + textStatus + " " + errorThrown);
           return false;
         }
-      })
+      });
     }
 }

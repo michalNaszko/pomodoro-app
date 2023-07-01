@@ -38,10 +38,10 @@ echo json_encode($aResult);
 
                 $resultArray = array();
                 
-                $query = 'DELETE FROM `Work Time` WHERE (User_id = :id)';
+                $query = 'DELETE FROM `WorkTime` WHERE (User_id = :id)';
                 $resultArray[] = $conn->prepare($query)->execute(['id' => $id]);
 
-                $query = 'DELETE FROM `Break Time` WHERE (User_id = :id)';
+                $query = 'DELETE FROM `BreakTime` WHERE (User_id = :id)';
                 $resultArray[] = $conn->prepare($query)->execute(['id' => $id]);
 
                 $query = 'DELETE FROM `Users` WHERE (id = :id)';

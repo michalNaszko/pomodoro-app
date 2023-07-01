@@ -1,7 +1,3 @@
-<?php
-session_start();
-?>
-
 <div class="modal-header border-bottom-0">
   <button type="button" class="btn-close" aria-label="Close"></button>
 </div>
@@ -40,7 +36,7 @@ session_start();
     $('#login-form').submit(function(e){
         e.preventDefault();
         $.ajax({
-            url: 'login/test.php',
+            url: 'login/login.php',
             type: 'POST',
             data:$('#login-form').serialize(),
             success:function(obj, textstatus, jqXHR){
@@ -50,6 +46,8 @@ session_start();
               var expected = "success";
               console.log('Type of expected: ' + typeof(expected));
               console.log('In test ajax success section: ' + obj.result);
+              console.log('xyz');
+              console.log('logged: ' + data.logged);
               if (data.result === "success")
               {
                 window.location.href = "index.php";
@@ -66,18 +64,3 @@ session_start();
         });
     });
   </script>
-
-  <?php include '../dbCon.php'; {
-
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      $username = $_POST['username'];
-      $password = $_POST['password'];
-      if (Connection::login($username, $password)) {
-        $_SESSION['logged'] = true;
-        $_SESSION['username'] = $username;
-        header("Location: ../index.php");
-        die();
-      }
-    }
-  }
-  ?>

@@ -2,7 +2,6 @@ import pandas as pd
 import datetime as dt
 import mysql.connector
 import random
-import re
 from mysql.connector import Error
 
 
@@ -44,44 +43,33 @@ def generate_time (max_value=10, dateList=None):
 
 
 try:
-    file_read = open("/etc/apache2/sites-available/pomodoro-app.conf", "r")
-
-    pattern = 'mysql\.default\.(.*[^ ]) "(.*)"'
-    lines = file_read.readlines()
-
-    db_con_data = {}
-
-    for l in lines:
-        match = re.search(pattern, l)
-        if match != None:
-            db_con_data[match.group(1)] = match.group(2)
-
-    print(db_con_data)
-
+    file_read = open("/run/secrets/db_root_password", "r")
+    password = file_read.read().rstrip()
+    print("\nFile opened!")
     file_read.close()
 
-    cnx = create_connection(db_con_data['servername'], 
-                            db_con_data['user'], 
-                            db_con_data['password'], 
-                            db_con_data['db'])
+    cnx = create_connection("db", 
+                            "root", 
+                            password, 
+                            "pomodoro")
 
     cursor = cnx.cursor()
 
-    query = ("DELETE FROM `Work Time`")
+    query = ("DELETE FROM `WorkTime`")
     cursor.execute(query)
 
-    query = ("DELETE FROM `Break Time`")
+    query = ("DELETE FROM `BreakTime`")
     cursor.execute(query)
 
     query = ("SELECT id, login FROM Users")
     cursor.execute(query)
     users = cursor.fetchall()
 
-    add_workTime = ("INSERT INTO `Work Time` "
+    add_workTime = ("INSERT INTO `WorkTime` "
                     "(User_id, Date, Time) "
                     "VALUES (%(id)s, %(date)s, %(time)s)")
 
-    add_breakTime = ("INSERT INTO `Break Time` "
+    add_breakTime = ("INSERT INTO `BreakTime` "
                     "(User_id, Date, Time) "
                     "VALUES (%(id)s, %(date)s, %(time)s)")
 

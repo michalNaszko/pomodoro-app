@@ -45,7 +45,7 @@ if (!isset($_SESSION['logged'])) {
                     if ($_SESSION['logged'] == false) {
                     ?>
                         <li class="nav-item">
-                            <a class="nav-link" id="loginHref" href="login/login.php">Login</a>
+                            <a class="nav-link" id="loginHref" href="login/login.html">Login</a>
                         </li>
                     <?php
                     } else {
@@ -75,7 +75,7 @@ if (!isset($_SESSION['logged'])) {
             <button id="btn-time-lBreak" class="p-2 flex-fill btn btn-outline-light" type="button">Long break</button>
         </div>
 
-        <div id="timer-string" class="blocktext">00:05</div>
+        <div id="timer-string" class="blocktext">00:08</div>
 
         <button id="btn-start" class="start btn btn-outline-light" type="button">Start</button>
 
@@ -87,7 +87,7 @@ if (!isset($_SESSION['logged'])) {
     <script type="text/javascript">
         $('#loginHref').on('click', function(e) {
             e.preventDefault();
-            $('#loginModal').modal('show').find('.modal-content').load("login/login.php");
+            $('#loginModal').modal('show').find('.modal-content').load("login/login.html");
         });
 
         function goToStatistics() {

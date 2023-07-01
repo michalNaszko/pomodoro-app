@@ -10,6 +10,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result['result'] = 'success';
   }
 }
-
+$result['logged'] = $_SESSION['logged'];
 echo json_encode($result);
 }
