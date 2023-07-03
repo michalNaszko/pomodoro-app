@@ -21,7 +21,7 @@ docker compose build
 docker stack deploy --compose-file=docker-compose.yml db_root_password
 ```
 ## Used technologies
-* PHP - without any framework, gol of this project was to learn this language
+* PHP - without any framework, goal of this project was to learn this language
 * HTML
 * Bootsrap
 * MySQL
