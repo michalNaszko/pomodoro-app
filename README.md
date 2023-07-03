@@ -8,4 +8,4 @@ docker swarm init
 openssl rand -base64 12 | docker secret create db_root_password -
 docker compose build
 docker stack deploy --compose-file=docker-compose.yml db_root_password
-![](https://thumbs.gfycat.com/CriminalGroundedDrafthorse-max-1mb.gif)
+![](https://youtu.be/DdfVKXuQGlE)
