@@ -79,6 +79,8 @@ window.onload = function () {
             {
               const n = new Notification("Time expired!");
             }
+            btn_start.textContent = "Start";
+            switchActivity();
           }
         }
       }, 1000);
@@ -178,5 +180,21 @@ window.onload = function () {
     }
 
     return true;
+  }
+
+  function switchActivity() {
+    if ($("#btn-time-work").hasClass("active")) {
+      $("#btn-time-work").removeClass("active");
+      $("#btn-time-sBreak").addClass("active");
+      $("#timer-string").text(times.get("btn-time-sBreak"));
+    } else if ($("#btn-time-sBreak").hasClass("active")) {
+      $("#btn-time-sBreak").removeClass("active");
+      $("#btn-time-work").addClass("active");
+      $("#timer-string").text(times.get("btn-time-work"));
+    } else if ($("#btn-time-lBreak").hasClass("active")) {
+      $("#btn-time-lBreak").removeClass("active");
+      $("#btn-time-work").addClass("active");
+      $("#timer-string").text(times.get("btn-time-work"));
+    }
   }
 }

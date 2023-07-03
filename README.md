@@ -8,3 +8,5 @@ docker swarm init
 openssl rand -base64 12 | docker secret create db_root_password -
 docker compose build
 docker stack deploy --compose-file=docker-compose.yml db_root_password
+<video src="./pomodoro.mp4" controls="controls" style="max-width: 730px;">
+</video>
