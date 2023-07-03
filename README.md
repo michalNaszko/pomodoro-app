@@ -26,4 +26,7 @@ docker stack deploy --compose-file=docker-compose.yml db_root_password
 * Bootsrap
 * MySQL
 * JavaScript, jQuery - there is mix of this two, because at the beginning I wasn't conscious that something like jQuery exists
+* Bash - to create script to start docker
+* Docker
+* Python - to generate data to db
 
