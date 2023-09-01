@@ -5,11 +5,13 @@ class Connection
     private $conn = null;
 
     private function __construct()
-    {        
-        $servername = "db";
-        $username = "root";
-        $password = rtrim(file_get_contents("/run/secrets/db_root_password"));
-        $db = "pomodoro";
+    {  
+        $url = parse_url(getenv("JAWSDB_MARIA_URL"));
+
+        $servername = $url["host"];
+        $username = $url["user"];
+        $password = $url["pass"];
+        $db = substr($url["path"], 1);
 
         try {
             $this->conn = new PDO("mysql:host=$servername",$username, $password);
