@@ -5,6 +5,9 @@
 * Registration/Login
 * Statistics in form of dashboard
 
+## Link to app deployed at Heroku
+https://pomodoro-app-5c54483095d7.herokuapp.com/
+
 ## Vizualization of working
 ![](./Pomodoro.gif)
 
